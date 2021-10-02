@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Register
+{% endblock title %}
+
+{% block content %}
+<style>
+	label{
+	  font-size: 20px;
+	  color: black;
+	 
+	}
+	</style>
+   <div class="col-md-10 col-sm-12 col-lg-6 mx-auto mt-3 jumbotron">
+	<h2>Sign up (Customer)</h2><br><br>
+        <form action="{% url "users:register" %}" method="POST" enctype="multipart/form-data">
+        	{% csrf_token %}
+        	<div class="form-group">
+        		<label>UserName</label>
+        		<input type="text" name="username" id='uname' value="" class="form-control" required="">
+        	</div>
+        	<div class="form-group">
+        		<label>Email</label>
+        		<input type="email" name="email" class="form-control" required="">
+        	</div>
+
+        	<div class="form-group">
+        		<label>Password</label>
+        		<input type="Password" name="password" class="form-control" required="">
+        	</div>
+
+        	<div class="form-group">
+        		<label>Confirm Password</label>
+        		<input type="Password" name="password2" class="form-control" required="">
+			</div>
+			<div class="form-group">
+        		<label>Latitude</label>
+        		<input type="text" name="latitude" id="id_latitude" class="form-control" required="">
+			</div>
+				<div class="form-group">
+        		<label>Longitude</label>
+        		<input type="text" name="longitude" id="id_longitude" class="form-control" required="">
+			</div>
+				<div class="form-group">
+        		<label>LOCATION</label>
+        		<input type="text" name="location" id="id_location" class="form-control" required="">
+			</div>
+			<div class="form-group">
+        		<label>HOUSE NAME</label>
+        		<input type="text" name="house" id="id_office_name" class="form-control" required="">
+			</div>
+			<div class="form-group">
+				<label>Upload Profile Picture</label>
+				<input id="mydata" type="hidden" name="mydata" value=""/>
+			</div>
+			<div id="pic1"></div><p></p>
+			<button type="button" class="btn btn-primary" data-toggle="modal" onclick="openCam()" data-target="#exampleModalCenter">
+				Open Camera
+			  </button><br>
+
+			  <div class="modal fade" id="exampleModalCenter" tabindex="-1" style="width: fit-content; height: 730px;" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog ">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="exampleModalCenterTitle">Camera</h5>
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+						<div id="camera" style="height:300px; width:300px;text-align:center;margin:0 auto;">
+
+						</div>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+					  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="takeSnapshot(this)">Done</button>
+					</div>
+				  </div>
+				</div>
+
+			  </div><br>
+
+
+        	<div class="form-group">
+        		<input type="submit" value="Register" class="btn btn-dark btn-block">
+			</div>
+
+		</form>
+		<script>
+			function openCam(){
+				// document.getElementById('camBox').style.display = 'block';
+				Webcam.set({
+				width: 400,
+				height: 380,
+				image_format: 'jpeg',
+				jpeg_quality: 100
+			});
+			Webcam.attach('#camera');
+
+			}
+
+			takeSnapshot = function () {
+
+				Webcam.snap(function (data_uri) {
+					document.getElementById('pic1').innerHTML =
+
+						'<img src="' + data_uri + '" id="" width="150px" height="100px" />';
+
+					var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+					document.getElementById('mydata').value = raw_image_data;
+					console.log(raw_image_data)
+
+				});
+				// Webcam.reset()
+				document.getElementById('camBox').style.display = 'none';       // HIDE THE POPUP DIALOG BOX.
+			}
+		</script>
+   </div>
+
+{% endblock content %}

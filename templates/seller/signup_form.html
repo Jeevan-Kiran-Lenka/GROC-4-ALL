@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+  .help-block{color:red;
+              font-weight:bold;
+  }
+  .control-label{
+    font-size: 20px;
+    color: black;
+   
+  }
+  </style>
+<div class="container jumbotron">
+  <div class="row">
+    <div class="container col-md-10 col-sm-12 col-lg-8">
+      <h2>Sign up ({{ user_type }})</h2><br><br>
+      
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Sign up</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

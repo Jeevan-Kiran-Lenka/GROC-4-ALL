@@ -1,0 +1,85 @@
+
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Add Products
+{% endblock title %}
+
+{% block content %}
+ <div class="col-md-12 container">
+        <form action="{% url "users:add"%}" method="POST" enctype="multipart/form-data">
+
+
+                {% csrf_token %}
+
+
+        <div class="col-md-6">
+
+           <div class="form-group">
+                <label>Title</label>
+                {% comment %} value="{{user.username}} {% endcomment %}
+                <input type="text" name="title" class="form-control" " >
+            </div>
+
+            <div class="form-group">
+                <label>price</label>
+                <input type="text" name="price" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label>description</label>
+                <input type="text" name="description" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label>quantity</label>
+                <input type="text" name="quantity" class="form-control" >
+            </div>
+            {% comment %} <div class="form-group ">
+                <label>category</label>
+                <input type="text" name="category" class="form-control" >
+            </div> {% endcomment %}
+            <!-- {% comment %} <div class="form-group" >
+                <label>published at</label>
+                <input id="date" type="datetime-local"  name="description" class="form-control" >
+
+
+            </div> {% endcomment %} -->
+
+            <div class="form-group" id="cat1">
+                {% if category %}
+            <label for="sel1">Select category:</label>
+            <select  name="category1" class="form-control" onchange='javascript:{document.getElementById("category").value=document.getElementById("sel1").options[document.getElementById("sel1").selectedIndex].value;}' id="sel1">
+                <option disabled selected>--Select Category--</option>
+                {%for cat in category%}
+                    <option value="{{cat}}">{{cat}}</option>
+                {%endfor%}
+            </select>
+            <input type="hidden" name="category" id="category">
+            {% endif %}
+            </div>
+            <button type="button" class="btn btn-primary" id="addbtn" onclick="addCat()" >Add Category</button>
+            <div class="form-group" id="cat2" style="display: None;">
+                <label>Add Category</label>
+                <input type="text" name="category" class="form-control" >
+            </div> 
+            <div class="form-group" >
+                <label>ADD PRODUCT PICTURE</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <div class="form-group" style="width: fit-content;">
+                <input type="submit" value="ADD PRODUCT"  class="btn btn-dark btn-block">
+            </div>
+    </div>
+        </form>
+    </div>
+
+    <script>
+   document.getElementById('date').value = (new Date()).format("m/dd/yy");
+   function addCat(){
+       document.getElementById('addbtn').style.display='None';
+       document.getElementById('cat1').style.display='None';
+       document.getElementById('cat2').style.display='Block';
+   }
+</script>
+    {% endblock content %}
